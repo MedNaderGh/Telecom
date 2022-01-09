@@ -1,0 +1,41 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>Resultat de recherche</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <ion-item-sliding *ngFor="let promotion of promotion">
+            <ion-item  *ngIf="((dist(promotion.Longitude,promotion.Latitude) < distance || distance === 0)&& (promotion.name.includes(mot)||mot === '' )&& (promotion.categorie === categorie|| categorie === '')&& (promotion.partenaire === partenaire|| partenaire === '')&&(promotion.reduction < reduction || reduction === 0)); else seter()">
+            <ion-card>
+                <!--<div style="text-align: right;" *ngIf=!isfav(promotion._id,userDetails._id)>
+              <ion-icon  (click)="test(promotion._id,userDetails._id)" name="heart-empty" style="color:red;"slot="end"></ion-icon></div>
+              <div style="text-align: right;" *ngIf=isfav(promotion._id,userDetails._id)>
+              <ion-icon  (click)="del(promotion._id,userDetails._id)" name="heart" style="color:red;"slot="end"></ion-icon></div>-->
+                <img src="{{promotion.img}}"/>
+                <strong>{{dist(promotion.Longitude,promotion.Latitude)}} Km</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              
+                <ion-card-header>{{promotion.name}}</ion-card-header>
+                <ion-label><strong><span style="text-decoration: line-through; font-size: 22px;
+                  font-weight: 700;
+                  text-transform: uppercase;
+                  display: inline-block;">{{promotion.prixas}}<sup>DT</sup> </span>    <span style="color: #d00ff7;font-size: 22px;
+                  font-weight: 700;
+                  text-transform: uppercase;
+                  display: inline-block;">&nbsp;&nbsp;&nbsp;{{promotion.prixas - (promotion.prixas/ 100)*promotion.reduction }}   <sup>DT</sup></span><span class="blink_me">&nbsp;&nbsp;{{promotion.reduction}}% </span></strong></ion-label>
+                  <!--{{partenaire.siteweb}}*/-->
+                  <ion-button  color="secondary" (click)="onOrderDelete(promotion._id)">
+                      <ion-icon name="eye" slot="start"></ion-icon>
+                      <ion-label>Plus de detail</ion-label>
+                    </ion-button>
+                    
+            </ion-card>
+          </ion-item>
+        </ion-item-sliding>
+      </ion-list>
+      <div *ngIf="error"><strong>Aucune promotion trouvée</strong></div> 
+</ion-content>
